@@ -22,12 +22,23 @@ li {
 
 .category-name {
   margin-right: 2em;
+  min-width: 200px;
+}
+
+.budget-container {
+  display: flex;
 }
 
 .label {
-  margin-right: 2px;
+  margin-right: 5px;
 }
 
 .budget-input {
   width: 50px;
+  text-align: center;
+  margin-right: 1em;
+}
+
+.budget-element {
+  min-width: 50px;
 }

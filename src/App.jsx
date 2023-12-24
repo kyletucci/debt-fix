@@ -6,13 +6,19 @@ import { nanoid } from "nanoid";
 function App() {
   const [categories, setCategories] = useState([]);
   const [categoryInput, setCategoryInput] = useState("");
+  const [totalBudget, setTotalBudget] = useState(0);
 
   const categoryInputChange = (event) => {
     setCategoryInput(event.target.value);
   };
 
   const addCategory = () => {
-    setCategories([...categories, { category: categoryInput, id: nanoid() }]);
+    if (categoryInput !== "") {
+      setCategories([
+        ...categories,
+        { category: categoryInput, id: nanoid(), budget: 0 },
+      ]);
+    }
     saveCategories();
     setCategoryInput("");
   };
@@ -33,7 +39,12 @@ function App() {
     }
   }, []);
 
-  console.log(categories);
+  useEffect(() => {
+    const totalBudget = localStorage.getItem("totalBudget");
+    if (totalBudget) {
+      setTotalBudget(JSON.parse(totalBudget));
+    }
+  }, []);
 
   return (
     <>
@@ -54,6 +65,7 @@ function App() {
         />
         <button onClick={addCategory}>Add</button>
       </form>
+      <span>Total Budget: {totalBudget}</span>
     </>
   );
 }

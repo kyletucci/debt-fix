@@ -3,10 +3,11 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import "./Category.css";
 import { useState } from "react";
 
-const Category = ({ category, key, onDelete }) => {
-  const [budget, setBudget] = useState("");
+const Category = ({ category, key, onDelete, saveBudget }) => {
+  const [budget, setBudget] = useState(0);
   const handleBudget = (event) => {
-    setBudget(event.target.value);
+    const newBudget = event.target.value;
+    setBudget(newBudget);
   };
 
   return (
@@ -17,19 +18,20 @@ const Category = ({ category, key, onDelete }) => {
         icon={faTrash}
       />
       <span className="category-name">{category}</span>
-      <div>
+      <div className="budget-container">
         <label className="label" htmlFor="budgetInput">
           $
         </label>
         <input
           className="budget-input"
           name="budgetInput"
-          type="text"
-          placeholder="0.00"
+          type="number"
+          placeholder="0"
           value={budget}
           onChange={handleBudget}
         />
       </div>
+      <span className="budget-element">{budget}</span>
     </li>
   );
 };

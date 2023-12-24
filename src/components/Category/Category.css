@@ -1,0 +1,33 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  list-style: none;
+}
+
+.category-container {
+  width: 300px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.trash-button {
+  padding: 0;
+  margin-right: 2em;
+}
+
+.category-name {
+  margin-right: 2em;
+}
+
+.label {
+  margin-right: 2px;
+}
+
+.budget-input {
+  width: 50px;
+}

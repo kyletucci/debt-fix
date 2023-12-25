@@ -3,36 +3,29 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import "./Category.css";
 import { useState } from "react";
 
-const Category = ({ category, key, onDelete, saveBudget }) => {
+const Category = ({ category, onDelete }) => {
   const [budget, setBudget] = useState(0);
-  const handleBudget = (event) => {
-    const newBudget = event.target.value;
-    setBudget(newBudget);
-  };
 
+  const handleBudgetChange = (event) => {
+    setBudget(event.target.value);
+  };
   return (
-    <li className="category-container" key={key}>
-      <FontAwesomeIcon
-        className="trash-button"
-        onClick={() => onDelete(category)}
-        icon={faTrash}
-      />
-      <span className="category-name">{category}</span>
-      <div className="budget-container">
-        <label className="label" htmlFor="budgetInput">
-          $
-        </label>
+    <div className="category-container">
+      <p>{category.title}</p>
+      <form>
+        <label htmlFor="monthlyBudget">$</label>
         <input
-          className="budget-input"
-          name="budgetInput"
-          type="number"
-          placeholder="0"
+          name="monthlyBudget"
+          type="text"
+          placeholder="0.00"
           value={budget}
-          onChange={handleBudget}
+          onChange={handleBudgetChange}
         />
-      </div>
-      <span className="budget-element">{budget}</span>
-    </li>
+      </form>
+      <button onClick={() => onDelete(category.id)}>
+        <FontAwesomeIcon icon={faTrash} />
+      </button>
+    </div>
   );
 };
 

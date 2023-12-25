@@ -1,72 +1,55 @@
 import "./App.css";
-import Category from "./components/Category/index";
+import Header from "./components/Header/index";
+import Categories from "./components/Categories/index";
 import { useState, useEffect } from "react";
-import { nanoid } from "nanoid";
+
+const LOCAL_STORAGE_KEY = "Categories";
 
 function App() {
   const [categories, setCategories] = useState([]);
-  const [categoryInput, setCategoryInput] = useState("");
-  const [totalBudget, setTotalBudget] = useState(0);
 
-  const categoryInputChange = (event) => {
-    setCategoryInput(event.target.value);
+  const loadSavedCategories = () => {
+    const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+    console.log(saved);
+    if (saved) {
+      setCategories(JSON.parse(saved));
+    }
   };
 
-  const addCategory = () => {
-    if (categoryInput !== "") {
-      setCategories([
+  useEffect(() => {
+    loadSavedCategories();
+  }, []);
+
+  const addCategory = (categoryTitle) => {
+    if (categoryTitle !== "") {
+      setCategoriesAndSave([
         ...categories,
-        { category: categoryInput, id: nanoid(), budget: 0 },
+        {
+          title: categoryTitle,
+          id: crypto.randomUUID(),
+          budget: 0,
+        },
       ]);
     }
-    saveCategories();
-    setCategoryInput("");
   };
 
-  const deleteCategory = (id) => {
-    setCategories(categories.filter((category) => category.category !== id));
-    saveCategories();
+  const deleteCategoryById = (categoryId) => {
+    const newCategories = categories.filter(
+      (category) => category.id !== categoryId
+    );
+    setCategoriesAndSave(newCategories);
   };
 
-  const saveCategories = () => {
-    localStorage.setItem("categories", JSON.stringify(categories));
+  const setCategoriesAndSave = (newCategories) => {
+    setCategories(newCategories);
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newCategories));
   };
-
-  useEffect(() => {
-    const categories = localStorage.getItem("categories");
-    if (categories) {
-      setCategories(JSON.parse(categories));
-    }
-  }, []);
-
-  useEffect(() => {
-    const totalBudget = localStorage.getItem("totalBudget");
-    if (totalBudget) {
-      setTotalBudget(JSON.parse(totalBudget));
-    }
-  }, []);
 
   return (
-    <>
-      <ul>
-        {categories.map((category) => (
-          <Category
-            onDelete={deleteCategory}
-            key={category.id}
-            category={category.category}
-          />
-        ))}
-      </ul>
-      <form className="category-form" onSubmit={addCategory} action="#">
-        <input
-          type="text"
-          value={categoryInput}
-          onChange={categoryInputChange}
-        />
-        <button onClick={addCategory}>Add</button>
-      </form>
-      <span>Total Budget: {totalBudget}</span>
-    </>
+    <div className="app-container">
+      <Header onAddCategory={addCategory} />
+      <Categories categories={categories} onDelete={deleteCategoryById} />
+    </div>
   );
 }
 

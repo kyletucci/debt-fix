@@ -29,11 +29,14 @@ const Category = ({ category, onDelete, updateBudget }) => {
             placeholder="0.00"
             value={budget}
             onChange={handleBudgetChange}
+            onFocus={(e) => e.target.select()}
           />
         </form>
         <button
           className="category-add-button"
           onClick={() => onDelete(category.id)}
+          readOnly
+          tabIndex="-1"
         >
           <FontAwesomeIcon icon={faTrash} />
         </button>

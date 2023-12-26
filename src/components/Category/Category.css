@@ -4,22 +4,53 @@
   margin: 0;
 }
 
-.category-container {
-  width: 300px;
+.nes-container.is-rounded.is-dark.category {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 600px;
+  border-radius: 10px;
+  padding: 1em 2em;
 }
 
 .form-container {
-  width: 150px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: center;
 }
 
+.category-title,
 .budget-input {
-  text-align: center;
-  width: 50px;
-  border: none;
+  font-weight: 700;
+  margin: auto 0;
+}
+
+.category-title {
+  margin-right: 4em;
+}
+
+.category-form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.category-form label {
+  padding: 0;
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.nes-input.budget {
+  margin-left: 0.5em;
+  width: 75px;
+  padding: 0;
+  background-color: transparent;
+  color: white;
+}
+
+.nes-btn.is-error {
+  color: white;
+  padding: 0.35em;
+  margin-left: 1em;
 }

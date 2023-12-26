@@ -1,0 +1,29 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.nes-container.is-rounded.is-dark.header {
+  margin-bottom: 2em;
+}
+
+.header-form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nes-input.header-input {
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 4px;
+  background: transparent;
+  color: white;
+  margin: 0.5em 0;
+  margin-right: 2em;
+}
+
+.nes-btn.is-success {
+  padding: 5px 20px;
+}

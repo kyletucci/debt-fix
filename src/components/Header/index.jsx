@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./Header.css";
 
 const Header = ({ onAddCategory }) => {
   const [title, setTitle] = useState("");
@@ -12,16 +13,20 @@ const Header = ({ onAddCategory }) => {
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
   };
+
   return (
-    <header>
-      <form onSubmit={handleSubmit}>
+    <header className="nes-container is-rounded is-dark header">
+      <form className="header-form" onSubmit={handleSubmit}>
         <input
+          className="nes-input header-input"
           type="text"
-          placeholder="Add category to budget"
+          placeholder="Add category.."
           value={title}
           onChange={onChangeTitle}
         />
-        <button>Add</button>
+        <button type="button" className="nes-btn is-success">
+          Add
+        </button>
       </form>
     </header>
   );

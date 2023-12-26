@@ -1,5 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import "./Category.css";
 import { useState } from "react";
 
@@ -12,10 +10,11 @@ const Category = ({ category, onDelete, updateBudget }) => {
   };
 
   return (
-    <div className="category-container">
-      <p>{category.title}</p>
+    <div className="nes-container is-rounded is-dark category">
+      <p className="category-title">{category.title}</p>
       <div className="form-container">
         <form
+          className="category-form"
           onSubmit={(event) => {
             updateBudget(category.id, budget, event);
             document.activeElement.blur();
@@ -23,7 +22,7 @@ const Category = ({ category, onDelete, updateBudget }) => {
         >
           <label htmlFor="budgetInput">$</label>
           <input
-            className="budget-input"
+            className="nes-input budget"
             name="budgetInput"
             type="text"
             placeholder="0.00"
@@ -33,12 +32,12 @@ const Category = ({ category, onDelete, updateBudget }) => {
           />
         </form>
         <button
-          className="category-add-button"
+          className="nes-btn is-error"
           onClick={() => onDelete(category.id)}
           readOnly
           tabIndex="-1"
         >
-          <FontAwesomeIcon icon={faTrash} />
+          DELETE
         </button>
       </div>
     </div>

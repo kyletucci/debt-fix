@@ -1,4 +1,5 @@
 import "./App.css";
+import "nes.css/css/nes.min.css";
 import Header from "./components/Header/index";
 import Categories from "./components/Categories/index";
 import { useState, useEffect } from "react";
@@ -8,6 +9,7 @@ const LOCAL_STORAGE_KEY = "Categories";
 function App() {
   const [categories, setCategories] = useState([]);
   const [totalBudget, setTotalBudget] = useState(0);
+  const [income, setIncome] = useState(0);
 
   const loadSavedCategories = () => {
     const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -20,6 +22,7 @@ function App() {
   useEffect(() => {
     loadSavedCategories();
     loadSavedTotalBudget();
+    loadSavedIncome();
   }, [totalBudget]);
 
   const addCategory = (categoryTitle) => {
@@ -72,19 +75,65 @@ function App() {
     }
   };
 
+  const handleIncomeChange = (event) => {
+    setIncomeAndSave(event.target.value);
+  };
+
+  const setIncomeAndSave = (newIncome) => {
+    setIncome(newIncome);
+    localStorage.setItem("Income", JSON.stringify(newIncome));
+  };
+
+  const loadSavedIncome = () => {
+    const saved = localStorage.getItem("Income");
+    if (saved) {
+      setIncome(JSON.parse(saved));
+    }
+  };
+
   return (
-    <div className="app-container">
+    <div className="nes-container is-dark with-title app">
+      <p className="title">Budget Calculator</p>
       <Header onAddCategory={addCategory} />
       <Categories
         categories={categories}
         onDelete={deleteCategoryById}
         updateBudget={updateBudget}
       />
-      <div className="summary-container">
-        <span>Total Monthly = {totalBudget}</span>
-        <span>Total Annual = {totalBudget * 12}</span>
-        <span>Annual Fee = </span>
-        <span>Annual - Fee = </span>
+      <div className="spend-container">
+        <span className="monthly-income">
+          <p>Monthly Income</p>
+          <p>=</p>
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              handleIncomeChange;
+              document.activeElement.blur();
+            }}
+          >
+            <label className="income-label" htmlFor="income-input">
+              $
+            </label>
+            <input
+              name="income-input"
+              className="nes-input"
+              type="text"
+              value={income}
+              onChange={handleIncomeChange}
+              onClick={(event) => event.target.select()}
+            />
+          </form>
+        </span>
+        <span>
+          <p>Monthly Spend</p>
+          <p>=</p>
+          <p>${totalBudget}</p>
+        </span>
+        <span>
+          <p>Disposable Income</p>
+          <p>=</p>
+          <p>${income - totalBudget}</p>
+        </span>
       </div>
     </div>
   );

@@ -39,8 +39,6 @@ const Debts = () => {
     setTitle("");
   };
 
-  console.log(debts);
-
   const onDeleteDebt = (debtId) => {
     const newDebts = debts.filter((debt) => debt.id !== debtId);
     setDebts(newDebts);

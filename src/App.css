@@ -85,7 +85,6 @@ html {
   flex-direction: column;
   justify-content: space-evenly;
   border: 5px solid #1e1e1e;
-  height: 150px;
   margin: 0;
   padding: 1em;
 }

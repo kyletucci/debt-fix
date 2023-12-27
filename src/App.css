@@ -5,6 +5,10 @@
   background-color: #1e1e1e;
 }
 
+html {
+  background-color: #1e1e1e;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;

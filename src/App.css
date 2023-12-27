@@ -1,7 +1,6 @@
 #root {
   margin: 0;
   padding: 2rem;
-  text-align: center;
   font-size: 14px;
   background-color: #1e1e1e;
 }
@@ -17,6 +16,15 @@
   justify-self: flex-start;
   min-width: 400px;
   width: 50%;
+}
+
+.nes-container.is-rounded.summary {
+  background-color: white;
+  color: black;
+  padding: 0.25em;
+  width: fit-content;
+  margin: 0 auto;
+  margin-top: 2em;
 }
 
 .app-container {
@@ -55,13 +63,36 @@
   margin-bottom: 0.5em;
 }
 
+.monthly-income {
+  display: flex;
+  align-items: center;
+}
+
 .monthly-income input {
   background-color: transparent;
-  color: white;
   text-align: center;
   width: 75px;
-  margin: 0;
+  margin: 0 0 0 5px;
   padding: 0;
+}
+
+.nes-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  border: 5px solid #1e1e1e;
+  height: 150px;
+  margin: 0;
+  padding: 1em;
+}
+
+.nes-list li {
+  margin-left: 2em;
+  margin-bottom: 0.5em;
+}
+
+.nes-list li form {
+  display: inline;
 }
 
 @keyframes logo-spin {

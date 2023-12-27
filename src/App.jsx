@@ -102,40 +102,39 @@ function App() {
           onDelete={deleteCategoryById}
           updateBudget={updateBudget}
         />
-        <div className="spend-container">
-          <span className="monthly-income">
-            <p>Monthly Income</p>
-            <p>=</p>
-            <form
-              onSubmit={(event) => {
-                event.preventDefault();
-                handleIncomeChange;
-                document.activeElement.blur();
-              }}
-            >
-              <label className="income-label" htmlFor="income-input">
-                $
-              </label>
-              <input
-                name="income-input"
-                className="nes-input"
-                type="text"
-                value={income}
-                onChange={handleIncomeChange}
-                onClick={(event) => event.target.select()}
-              />
-            </form>
-          </span>
-          <span>
-            <p>Monthly Spend</p>
-            <p>=</p>
-            <p>${totalBudget}</p>
-          </span>
-          <span>
-            <p>Disposable Income</p>
-            <p>=</p>
-            <p>${income - totalBudget}</p>
-          </span>
+        <div className="nes-container is-rounded summary">
+          <ul className="nes-list is-circle">
+            <li className="monthly-income">
+              <span>
+                Monthly Income:
+                <form
+                  onSubmit={(event) => {
+                    event.preventDefault();
+                    handleIncomeChange;
+                    document.activeElement.blur();
+                  }}
+                >
+                  <label className="income-label" htmlFor="income-input">
+                    $
+                  </label>
+                  <input
+                    name="income-input"
+                    className="nes-input"
+                    type="text"
+                    value={income}
+                    onChange={handleIncomeChange}
+                    onClick={(event) => event.target.select()}
+                  />
+                </form>
+              </span>
+            </li>
+            <li>
+              <span>Monthly Spend: ${totalBudget}</span>
+            </li>
+            <li>
+              <span>Disposable Income = ${income - totalBudget}</span>
+            </li>
+          </ul>
         </div>
       </div>
       <Debts addCategory={addCategory} />

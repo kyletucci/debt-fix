@@ -6,9 +6,9 @@
 
 .nes-container.is-rounded.is-dark.category {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  width: 600px;
   border-radius: 10px;
   padding: 1em 2em;
 }
@@ -16,7 +16,9 @@
 .form-container {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  width: 20%;
+  margin-right: 1.5em;
 }
 
 .category-title,
@@ -27,12 +29,15 @@
 
 .category-title {
   margin-right: 4em;
+  text-align: left;
+  width: 40%;
 }
 
 .category-form {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 20%;
 }
 
 .category-form label {
@@ -51,6 +56,6 @@
 
 .nes-btn.is-error {
   color: white;
-  padding: 0.35em;
-  margin-left: 1em;
+  margin: 0;
+  padding: 0.5em 1em;
 }

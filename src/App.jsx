@@ -2,6 +2,7 @@ import "./App.css";
 import "nes.css/css/nes.min.css";
 import Header from "./components/Header/index";
 import Categories from "./components/Categories/index";
+import Debts from "./components/Debts";
 import { useState, useEffect } from "react";
 
 const LOCAL_STORAGE_KEY = "Categories";
@@ -92,49 +93,52 @@ function App() {
   };
 
   return (
-    <div className="nes-container is-dark with-title app">
-      <p className="title">Budget Calculator</p>
-      <Header onAddCategory={addCategory} />
-      <Categories
-        categories={categories}
-        onDelete={deleteCategoryById}
-        updateBudget={updateBudget}
-      />
-      <div className="spend-container">
-        <span className="monthly-income">
-          <p>Monthly Income</p>
-          <p>=</p>
-          <form
-            onSubmit={(event) => {
-              event.preventDefault();
-              handleIncomeChange;
-              document.activeElement.blur();
-            }}
-          >
-            <label className="income-label" htmlFor="income-input">
-              $
-            </label>
-            <input
-              name="income-input"
-              className="nes-input"
-              type="text"
-              value={income}
-              onChange={handleIncomeChange}
-              onClick={(event) => event.target.select()}
-            />
-          </form>
-        </span>
-        <span>
-          <p>Monthly Spend</p>
-          <p>=</p>
-          <p>${totalBudget}</p>
-        </span>
-        <span>
-          <p>Disposable Income</p>
-          <p>=</p>
-          <p>${income - totalBudget}</p>
-        </span>
+    <div className="app-container">
+      <div className="nes-container is-dark with-title app">
+        <p className="title">Budget Calculator</p>
+        <Header onAddCategory={addCategory} />
+        <Categories
+          categories={categories}
+          onDelete={deleteCategoryById}
+          updateBudget={updateBudget}
+        />
+        <div className="spend-container">
+          <span className="monthly-income">
+            <p>Monthly Income</p>
+            <p>=</p>
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+                handleIncomeChange;
+                document.activeElement.blur();
+              }}
+            >
+              <label className="income-label" htmlFor="income-input">
+                $
+              </label>
+              <input
+                name="income-input"
+                className="nes-input"
+                type="text"
+                value={income}
+                onChange={handleIncomeChange}
+                onClick={(event) => event.target.select()}
+              />
+            </form>
+          </span>
+          <span>
+            <p>Monthly Spend</p>
+            <p>=</p>
+            <p>${totalBudget}</p>
+          </span>
+          <span>
+            <p>Disposable Income</p>
+            <p>=</p>
+            <p>${income - totalBudget}</p>
+          </span>
+        </div>
       </div>
+      <Debts addCategory={addCategory} />
     </div>
   );
 }

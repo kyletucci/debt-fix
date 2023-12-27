@@ -1,0 +1,74 @@
+.nes-container.is-rounded.is-dark.debt {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+  padding: 1em 2em;
+  width: 100%;
+}
+
+.nes-container.is-dark.with-title.debts {
+  align-self: flex-start;
+  justify-self: flex-end;
+  width: 50%;
+}
+
+.debt-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.debt-title,
+.debt-input {
+  font-weight: 700;
+  margin: auto 0;
+}
+
+.debt-title {
+  margin-left: 0.25em;
+  width: 30%;
+  text-align: left;
+}
+
+.debt-form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 40%;
+  min-width: fit-content;
+  margin: 0 2em;
+}
+
+.debt-form label {
+  padding: 0;
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.nes-input.debt,
+.nes-input.interest {
+  margin-left: 0.5em;
+  width: 75px;
+  padding: 0;
+  background-color: transparent;
+  color: white;
+  text-align: center;
+}
+
+.square-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2em;
+}
+
+.month-container {
+  display: flex;
+  flex-direction: column;
+  margin-right: 0.5em;
+  margin-bottom: 1em;
+}

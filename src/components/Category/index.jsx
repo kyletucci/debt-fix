@@ -6,7 +6,6 @@ const Category = ({ category, onDelete, updateBudget }) => {
 
   const handleBudgetChange = (event) => {
     setBudget(event.target.value);
-    updateBudget(category.id, event.target.value, event);
   };
 
   return (
@@ -31,15 +30,15 @@ const Category = ({ category, onDelete, updateBudget }) => {
             onFocus={(e) => e.target.select()}
           />
         </form>
-        <button
-          className="nes-btn is-error"
-          onClick={() => onDelete(category.id)}
-          readOnly
-          tabIndex="-1"
-        >
-          DELETE
-        </button>
       </div>
+      <button
+        className="nes-btn is-error"
+        onClick={() => onDelete(category.id)}
+        readOnly
+        tabIndex="-1"
+      >
+        DELETE
+      </button>
     </div>
   );
 };

@@ -61,14 +61,19 @@
 .square-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
   margin-top: 2em;
 }
 
 .month-container {
+  flex-grow: 1;
+  width: calc(100% * (1 / 6) - 10px - 1px);
   display: flex;
   flex-direction: column;
-  margin-right: 0.5em;
   margin-bottom: 1em;
+  text-align: center;
+}
+
+.heart-container {
+  width: fit-content;
+  margin: 0 auto;
 }

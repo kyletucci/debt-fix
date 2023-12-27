@@ -1,10 +1,12 @@
 import { useState } from "react";
+import Month from "../Month/index.jsx";
 
 import "./Debts.css";
 
 const Debts = () => {
   const [title, setTitle] = useState("");
   const [debts, setDebts] = useState([]);
+
   const months = [
     "January",
     "February",
@@ -20,14 +22,7 @@ const Debts = () => {
     "December",
   ];
 
-  const logSquares = months.map((month) => {
-    return (
-      <div key={crypto.randomUUID()} className="month-container">
-        <span>{month}</span>
-        <span>[][][][]</span>
-      </div>
-    );
-  });
+  const totalMonths = 17;
 
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
@@ -42,6 +37,17 @@ const Debts = () => {
   const onDeleteDebt = (debtId) => {
     const newDebts = debts.filter((debt) => debt.id !== debtId);
     setDebts(newDebts);
+  };
+
+  const drawMonths = (months) => {
+    return months.map((month, i) => (
+      <Month
+        key={crypto.randomUUID()}
+        month={month}
+        monthNumber={i + 1}
+        totalMonths={totalMonths}
+      />
+    ));
   };
 
   return (
@@ -104,7 +110,7 @@ const Debts = () => {
           );
         })}
         {/* Debt Payoff Heatmap */}
-        <div className="square-container">{logSquares}</div>
+        <div className="square-container">{drawMonths(months)}</div>
       </div>
     </div>
   );

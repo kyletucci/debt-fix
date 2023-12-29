@@ -8,10 +8,19 @@
   width: 100%;
 }
 
+.debt-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2em;
+  width: 100%;
+}
+
 .nes-container.is-dark.with-title.debts {
   align-self: flex-start;
   justify-self: flex-end;
   width: 50%;
+  min-width: 800px;
 }
 
 .debt-container {
@@ -40,6 +49,13 @@
   width: 40%;
   min-width: fit-content;
   margin: 0 2em;
+}
+
+.balance-container,
+.interest-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .debt-form label {
@@ -76,4 +92,8 @@
 .heart-container {
   width: fit-content;
   margin: 0 auto;
+}
+
+.nes-btn.is-error.invisible {
+  visibility: hidden;
 }

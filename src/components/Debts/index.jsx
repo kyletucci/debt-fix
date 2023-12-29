@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Month from "../Month/index.jsx";
+import Debt from "../Debt/index.jsx";
 
 import "./Debts.css";
 
 const Debts = () => {
-  const [title, setTitle] = useState("");
   const [debts, setDebts] = useState([]);
+  const [title, setTitle] = useState("");
 
   const months = [
     "January",
@@ -24,19 +25,57 @@ const Debts = () => {
 
   const totalMonths = 17;
 
+  useEffect(() => {
+    loadSavedDebts();
+  }, []);
+
+  const loadSavedDebts = () => {
+    const saved = localStorage.getItem("debts");
+    if (saved) {
+      setDebts(JSON.parse(saved));
+    }
+  };
+
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
   };
 
-  const onDebtSubmit = (title, event) => {
+  const onDebtSubmit = (debtTitle, event) => {
     event.preventDefault();
-    setDebts([...debts, { id: crypto.randomUUID(), title: title }]);
+    if (debtTitle !== "") {
+      setAndSaveDebts([
+        ...debts,
+        {
+          id: crypto.randomUUID(),
+          title: debtTitle,
+          amount: 0,
+          interestRate: 0,
+        },
+      ]);
+    }
     setTitle("");
+  };
+
+  const setAndSaveDebts = (newDebts) => {
+    setDebts(newDebts);
+    localStorage.setItem("debts", JSON.stringify(newDebts));
   };
 
   const onDeleteDebt = (debtId) => {
     const newDebts = debts.filter((debt) => debt.id !== debtId);
-    setDebts(newDebts);
+    setAndSaveDebts(newDebts);
+  };
+
+  const updateDebt = (debtId, amount, interestRate, event) => {
+    event.preventDefault();
+    const newDebts = debts.map((debt) => {
+      if (debtId === debt.id) {
+        return { ...debt, amount: amount, interestRate: interestRate };
+      }
+      return debt;
+    });
+    setAndSaveDebts(newDebts);
+    // setTotalBudgetAndSave(newCategories.reduce((a, c) => a + +c.budget, 0));
   };
 
   const drawMonths = (months) => {
@@ -49,6 +88,8 @@ const Debts = () => {
       />
     ));
   };
+
+  console.log(debts);
 
   return (
     <div className="nes-container is-dark with-title debts">
@@ -74,44 +115,34 @@ const Debts = () => {
           </button>
         </form>
       </header>
-      <div key={crypto.randomUUID()} className="debt-container">
-        {debts.map((debt) => {
-          return (
-            <div
-              key={crypto.randomUUID()}
-              className="nes-container is-rounded is-dark debt"
-            >
-              <p className="debt-title">{debt.title}</p>
-              <form className="debt-form">
-                <label htmlFor="debtInput">$</label>
-                <input
-                  className="nes-input debt"
-                  name="debtInput"
-                  type="text"
-                  placeholder="0.00"
-                />
-                <input
-                  className="nes-input interest"
-                  name="interestInput"
-                  type="text"
-                  placeholder="0.00"
-                />
-                <label htmlFor="interestInput">%</label>
-              </form>
-              <button
-                onClick={() => onDeleteDebt(debt.id)}
-                className="nes-btn is-error"
-                readOnly
-                tabIndex="-1"
-              >
-                DELETE
-              </button>
-            </div>
-          );
-        })}
-        {/* Debt Payoff Heatmap */}
-        <div className="square-container">{drawMonths(months)}</div>
+      <div className="debt-header">
+        <p className="debt-title">Debt</p>
+        <div className="debt-form">
+          <span>Balance</span>
+          <span>Interest</span>
+        </div>
+        <button
+          onClick={(event) => event.preventDefault()}
+          className="nes-btn is-error invisible"
+          readOnly
+          tabIndex="-1"
+        >
+          DELETE
+        </button>
       </div>
+      {debts
+        .sort((a, b) => b.amount - a.amount)
+        .map((debt) => (
+          <Debt
+            key={crypto.randomUUID()}
+            debt={debt}
+            onDebtSubmit={onDebtSubmit}
+            onDeleteDebt={onDeleteDebt}
+            updateDebt={updateDebt}
+          />
+        ))}
+      {/* Debt Payoff Heatmap */}
+      <div className="square-container">{drawMonths(months)}</div>
     </div>
   );
 };

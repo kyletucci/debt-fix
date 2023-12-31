@@ -1,12 +1,12 @@
 import { useState } from "react";
 import "./Header.css";
 
-const Header = ({ onAddCategory }) => {
+const Header = ({ addCategory }) => {
   const [title, setTitle] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onAddCategory(title);
+    addCategory(title);
     setTitle("");
   };
 

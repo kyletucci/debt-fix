@@ -1,6 +1,5 @@
 import Category from "../Category/index";
-
-const Categories = ({ categories, onDelete, updateBudget }) => {
+const Categories = ({ categories, deleteCategoryById, updateBudget }) => {
   return (
     <div>
       {categories
@@ -9,7 +8,7 @@ const Categories = ({ categories, onDelete, updateBudget }) => {
           <Category
             key={category.id}
             category={category}
-            onDelete={onDelete}
+            deleteCategoryById={deleteCategoryById}
             updateBudget={updateBudget}
           />
         ))}

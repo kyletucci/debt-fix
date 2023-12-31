@@ -1,14 +1,11 @@
-.nes-container.is-rounded.is-dark.debt {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 10px;
-  padding: 1em 2em;
-  width: 100%;
+.debts-container {
+  align-self: flex-start;
+  justify-self: flex-end;
+  width: 50%;
+  min-width: 800px;
 }
 
-.debt-header {
+.debts-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -16,18 +13,18 @@
   width: 100%;
 }
 
-.nes-container.is-dark.with-title.debts {
-  align-self: flex-start;
-  justify-self: flex-end;
-  width: 50%;
-  min-width: 800px;
+button.is-error.invisible {
+  visibility: hidden;
 }
 
 .debt-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-wrap: wrap;
   justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+  padding: 1em 2em;
+  width: 100%;
 }
 
 .debt-title,
@@ -64,8 +61,8 @@
   font-size: 1.5rem;
 }
 
-.nes-input.debt,
-.nes-input.interest {
+input.debt-balance,
+input.debt-interest {
   margin-left: 0.5em;
   width: 75px;
   padding: 0;
@@ -74,7 +71,7 @@
   text-align: center;
 }
 
-.square-container {
+.months-container {
   display: flex;
   flex-wrap: wrap;
   margin-top: 2em;
@@ -92,8 +89,4 @@
 .heart-container {
   width: fit-content;
   margin: 0 auto;
-}
-
-.nes-btn.is-error.invisible {
-  visibility: hidden;
 }

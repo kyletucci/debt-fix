@@ -1,7 +1,7 @@
 import "./Category.css";
 import { useState } from "react";
 
-const Category = ({ category, onDelete, updateBudget }) => {
+const Category = ({ category, deleteCategoryById, updateBudget }) => {
   const [budget, setBudget] = useState(category.budget);
 
   const handleBudgetChange = (event) => {
@@ -33,7 +33,7 @@ const Category = ({ category, onDelete, updateBudget }) => {
       </div>
       <button
         className="nes-btn is-error"
-        onClick={() => onDelete(category.id)}
+        onClick={() => deleteCategoryById(category.id)}
         readOnly
         tabIndex="-1"
       >

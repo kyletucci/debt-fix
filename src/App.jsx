@@ -9,11 +9,15 @@ function App() {
 
   useEffect(() => {
     loadSavedDisposableIncome();
-  }, [disposableIncome]);
+  }, []);
 
   const setAndSaveDisposableIncome = (income, monthlySpend) => {
-    setDisposableIncome(income - monthlySpend);
-    localStorage.setItem("disposableIncome", JSON.stringify(disposableIncome));
+    const newDisposableIncome = income - monthlySpend;
+    setDisposableIncome(newDisposableIncome);
+    localStorage.setItem(
+      "disposableIncome",
+      JSON.stringify(newDisposableIncome)
+    );
   };
 
   const loadSavedDisposableIncome = () => {

@@ -10,11 +10,13 @@ const BudgetSummary = ({
   useEffect(() => {
     loadSavedIncome();
   }, []);
+
   const handleIncomeChange = (event) => {
     setIncomeAndSave(event.target.value);
   };
 
   const setIncomeAndSave = (newIncome) => {
+    newIncome = Number(newIncome);
     setIncome(newIncome);
     localStorage.setItem("income", JSON.stringify(newIncome));
   };
@@ -36,7 +38,7 @@ const BudgetSummary = ({
               onSubmit={(event) => {
                 event.preventDefault();
                 handleIncomeChange;
-                setAndSaveDisposableIncome(income - totalBudget);
+                setAndSaveDisposableIncome(income, totalBudget);
                 document.activeElement.blur();
               }}
             >

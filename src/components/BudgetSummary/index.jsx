@@ -1,33 +1,10 @@
-import { useEffect, useState } from "react";
-
 const BudgetSummary = ({
   setAndSaveDisposableIncome,
   totalBudget,
   disposableIncome,
+  handleIncomeChange,
+  income,
 }) => {
-  const [income, setIncome] = useState(0);
-
-  useEffect(() => {
-    loadSavedIncome();
-  }, []);
-
-  const handleIncomeChange = (event) => {
-    setIncomeAndSave(event.target.value);
-  };
-
-  const setIncomeAndSave = (newIncome) => {
-    newIncome = Number(newIncome);
-    setIncome(newIncome);
-    localStorage.setItem("income", JSON.stringify(newIncome));
-  };
-
-  const loadSavedIncome = () => {
-    const saved = localStorage.getItem("income");
-    if (saved) {
-      setIncome(JSON.parse(saved));
-    }
-  };
-
   return (
     <div className="nes-container is-rounded summary">
       <ul className="nes-list is-circle">

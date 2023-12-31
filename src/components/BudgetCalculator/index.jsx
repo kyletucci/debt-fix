@@ -6,11 +6,13 @@ import BudgetSummary from "../BudgetSummary";
 const BudgetCalculator = ({ setAndSaveDisposableIncome, disposableIncome }) => {
   const [categories, setCategories] = useState([]);
   const [totalBudget, setTotalBudget] = useState(0);
+  const [income, setIncome] = useState(0);
 
   useEffect(() => {
+    loadSavedIncome();
     loadSavedCategories();
     loadSavedTotalBudget();
-  }, [totalBudget, disposableIncome]);
+  }, [totalBudget, disposableIncome, income]);
 
   const addCategory = (categoryTitle) => {
     if (categoryTitle !== "") {
@@ -70,6 +72,23 @@ const BudgetCalculator = ({ setAndSaveDisposableIncome, disposableIncome }) => {
     }
   };
 
+  const setIncomeAndSave = (newIncome) => {
+    newIncome = Number(newIncome);
+    setIncome(newIncome);
+    localStorage.setItem("income", JSON.stringify(newIncome));
+  };
+
+  const loadSavedIncome = () => {
+    const saved = localStorage.getItem("income");
+    if (saved) {
+      setIncome(JSON.parse(saved));
+    }
+  };
+
+  const handleIncomeChange = (event) => {
+    setIncomeAndSave(event.target.value);
+  };
+
   return (
     <div className="nes-container is-dark with-title budget-calculator">
       <p className="title">Budget Calculator</p>
@@ -83,6 +102,8 @@ const BudgetCalculator = ({ setAndSaveDisposableIncome, disposableIncome }) => {
         setAndSaveDisposableIncome={setAndSaveDisposableIncome}
         totalBudget={totalBudget}
         disposableIncome={disposableIncome}
+        handleIncomeChange={handleIncomeChange}
+        income={income}
       />
     </div>
   );

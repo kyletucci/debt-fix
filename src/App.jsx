@@ -5,12 +5,13 @@ import Categories from "./components/Categories/index";
 import Debts from "./components/Debts";
 import { useState, useEffect } from "react";
 
-const LOCAL_STORAGE_KEY = "Categories";
+const LOCAL_STORAGE_KEY = "categories";
 
 function App() {
   const [categories, setCategories] = useState([]);
   const [totalBudget, setTotalBudget] = useState(0);
   const [income, setIncome] = useState(0);
+  const [disposableIncome, setDisposableIncome] = useState(0);
 
   const loadSavedCategories = () => {
     const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -21,10 +22,11 @@ function App() {
   };
 
   useEffect(() => {
+    loadSavedDisposableIncome();
     loadSavedCategories();
     loadSavedTotalBudget();
     loadSavedIncome();
-  }, [totalBudget]);
+  }, [totalBudget, disposableIncome]);
 
   const addCategory = (categoryTitle) => {
     if (categoryTitle !== "") {
@@ -66,14 +68,22 @@ function App() {
 
   const setTotalBudgetAndSave = (newTotalBudget) => {
     setTotalBudget(newTotalBudget);
-    localStorage.setItem("Total Budget", JSON.stringify(newTotalBudget));
+    localStorage.setItem("totalBudget", JSON.stringify(newTotalBudget));
   };
 
   const loadSavedTotalBudget = () => {
-    const saved = localStorage.getItem("Total Budget");
+    const saved = localStorage.getItem("totalBudget");
     if (saved) {
       setTotalBudget(JSON.parse(saved));
     }
+  };
+
+  const setDisposableIncomeAndSave = (newDisposableIncome) => {
+    setDisposableIncome(income - newDisposableIncome);
+    localStorage.setItem(
+      "disposableIncome",
+      JSON.stringify(newDisposableIncome)
+    );
   };
 
   const handleIncomeChange = (event) => {
@@ -82,13 +92,20 @@ function App() {
 
   const setIncomeAndSave = (newIncome) => {
     setIncome(newIncome);
-    localStorage.setItem("Income", JSON.stringify(newIncome));
+    localStorage.setItem("income", JSON.stringify(newIncome));
   };
 
   const loadSavedIncome = () => {
-    const saved = localStorage.getItem("Income");
+    const saved = localStorage.getItem("income");
     if (saved) {
       setIncome(JSON.parse(saved));
+    }
+  };
+
+  const loadSavedDisposableIncome = () => {
+    const saved = localStorage.getItem("disposableIncome");
+    if (saved) {
+      setDisposableIncome(JSON.parse(saved));
     }
   };
 
@@ -111,6 +128,7 @@ function App() {
                   onSubmit={(event) => {
                     event.preventDefault();
                     handleIncomeChange;
+                    setDisposableIncomeAndSave(income - totalBudget);
                     document.activeElement.blur();
                   }}
                 >
@@ -132,12 +150,12 @@ function App() {
               <span>Monthly Spend: ${totalBudget}</span>
             </li>
             <li>
-              <span>Disposable Income = ${income - totalBudget}</span>
+              <span>Disposable Income = ${disposableIncome}</span>
             </li>
           </ul>
         </div>
       </div>
-      <Debts addCategory={addCategory} />
+      <Debts disposableIncome={disposableIncome} addCategory={addCategory} />
     </div>
   );
 }

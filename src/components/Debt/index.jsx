@@ -1,13 +1,18 @@
 import { useState } from "react";
 
-const Debt = ({ debt, onDeleteDebt, updateDebt }) => {
+const Debt = ({ debt, onDeleteDebt, updateDebt, disposableIncome }) => {
   const [formValues, setFormValues] = useState({
-    amount: debt.amount,
+    balance: debt.balance,
     interestRate: debt.interestRate,
   });
 
+  const [monthsUntilPayoff, setMonthsUntilPayoff] = useState(
+    debt.balance / disposableIncome
+  );
+
   const handleChange = (event) => {
     const { name, value } = event.target;
+    setMonthsUntilPayoff(debt.balance / disposableIncome);
     setFormValues({ ...formValues, [name]: value });
   };
 
@@ -15,7 +20,13 @@ const Debt = ({ debt, onDeleteDebt, updateDebt }) => {
     if (e.key === "Enter") {
       e.preventDefault();
       document.activeElement.blur();
-      updateDebt(debt.id, formValues.amount, formValues.interestRate, event);
+      updateDebt(
+        debt.id,
+        formValues.balance,
+        formValues.interestRate,
+        e,
+        monthsUntilPayoff
+      );
     }
   };
 
@@ -26,10 +37,10 @@ const Debt = ({ debt, onDeleteDebt, updateDebt }) => {
         <label htmlFor="debtInput">$</label>
         <input
           className="nes-input debt"
-          name="amount"
+          name="balance"
           type="text"
           placeholder="0.00"
-          value={formValues.amount}
+          value={formValues.balance}
           onChange={handleChange}
           onKeyDown={handleKeyPress}
         />

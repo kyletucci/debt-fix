@@ -4,7 +4,7 @@ import Debt from "../Debt/index.jsx";
 
 import "./Debts.css";
 
-const Debts = () => {
+const Debts = ({ disposableIncome }) => {
   const [debts, setDebts] = useState([]);
   const [title, setTitle] = useState("");
 
@@ -22,8 +22,6 @@ const Debts = () => {
     "November",
     "December",
   ];
-
-  const totalMonths = 17;
 
   useEffect(() => {
     loadSavedDebts();
@@ -48,7 +46,7 @@ const Debts = () => {
         {
           id: crypto.randomUUID(),
           title: debtTitle,
-          amount: 0,
+          balance: 0,
           interestRate: 0,
         },
       ]);
@@ -66,11 +64,22 @@ const Debts = () => {
     setAndSaveDebts(newDebts);
   };
 
-  const updateDebt = (debtId, amount, interestRate, event) => {
+  const updateDebt = (
+    debtId,
+    balance,
+    interestRate,
+    event,
+    monthsUntilPayoff
+  ) => {
     event.preventDefault();
     const newDebts = debts.map((debt) => {
       if (debtId === debt.id) {
-        return { ...debt, amount: amount, interestRate: interestRate };
+        return {
+          ...debt,
+          balance: balance,
+          interestRate: interestRate,
+          monthsUntilPayoff: monthsUntilPayoff,
+        };
       }
       return debt;
     });
@@ -80,16 +89,9 @@ const Debts = () => {
 
   const drawMonths = (months) => {
     return months.map((month, i) => (
-      <Month
-        key={crypto.randomUUID()}
-        month={month}
-        monthNumber={i + 1}
-        totalMonths={totalMonths}
-      />
+      <Month key={crypto.randomUUID()} month={month} monthNumber={i + 1} />
     ));
   };
-
-  console.log(debts);
 
   return (
     <div className="nes-container is-dark with-title debts">
@@ -131,7 +133,7 @@ const Debts = () => {
         </button>
       </div>
       {debts
-        .sort((a, b) => b.amount - a.amount)
+        .sort((a, b) => b.balance - a.balance)
         .map((debt) => (
           <Debt
             key={crypto.randomUUID()}
@@ -139,6 +141,7 @@ const Debts = () => {
             onDebtSubmit={onDebtSubmit}
             onDeleteDebt={onDeleteDebt}
             updateDebt={updateDebt}
+            disposableIncome={disposableIncome}
           />
         ))}
       {/* Debt Payoff Heatmap */}

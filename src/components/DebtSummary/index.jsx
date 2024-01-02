@@ -1,26 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const DebtSummary = ({
   totalDebts,
   disposableIncome,
   setAndSaveMonthsUntilPayoff,
   monthsUntilPayoff,
-  debts,
+  handleMethodChange,
+  payoffMethod,
+  sortedDebts,
 }) => {
   useEffect(() => {
     setAndSaveMonthsUntilPayoff(totalDebts, disposableIncome);
   }, [disposableIncome, totalDebts]);
-
-  const [payoffMethod, setPayoffMethod] = useState("snowball");
-
-  const handleMethodChange = (e) => {
-    setPayoffMethod(e.target.value);
-  };
-
-  const sortedDebts =
-    payoffMethod === "snowball"
-      ? debts.sort((a, b) => a.balance - b.balance)
-      : debts.sort((a, b) => a.interestRate - b.interestRate);
 
   return (
     <div className="nes-container is-rounded summary">
@@ -58,7 +49,7 @@ const DebtSummary = ({
             onChange={handleMethodChange}
             className="nes-radio"
           />
-          <span>Highest Debt First</span>
+          <span>Highest Interest First</span>
         </label>
       </div>
       <ul

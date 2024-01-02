@@ -8,6 +8,16 @@ const DebtCalculator = ({ disposableIncome }) => {
   const [title, setTitle] = useState("");
   const [totalDebts, setTotalDebts] = useState(0);
   const [monthsUntilPayoff, setMonthsUntilPayoff] = useState(0);
+  const [payoffMethod, setPayoffMethod] = useState("snowball");
+
+  const handleMethodChange = (e) => {
+    setPayoffMethod(e.target.value);
+  };
+
+  const sortedDebts =
+    payoffMethod === "snowball"
+      ? debts.sort((a, b) => a.balance - b.balance)
+      : debts.sort((a, b) => b.interestRate - a.interestRate);
 
   const months = [
     "January",
@@ -177,7 +187,9 @@ const DebtCalculator = ({ disposableIncome }) => {
         totalDebts={totalDebts}
         setAndSaveMonthsUntilPayoff={setAndSaveMonthsUntilPayoff}
         monthsUntilPayoff={monthsUntilPayoff}
-        debts={debts}
+        sortedDebts={sortedDebts}
+        handleMethodChange={handleMethodChange}
+        payoffMethod={payoffMethod}
       />
     </div>
   );

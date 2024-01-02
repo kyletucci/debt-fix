@@ -1,10 +1,4 @@
 const Heart = ({ isFilled }) => {
-  //   const [isFilled, setIsFilled] = useState(false);
-
-  //   const toggleFilled = (isFilled) => {
-  //     setIsFilled(!isFilled);
-  //   };
-
   return (
     <i
       id={crypto.randomUUID()}

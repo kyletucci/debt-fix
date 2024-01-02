@@ -1,15 +1,16 @@
 import Heart from "../Heart/index.jsx";
 
-const Month = ({ month, monthNumber, totalMonths }) => {
+const Month = ({ month, monthNumber, monthsUntilPayoff }) => {
   const drawHearts = () => {
-    const lastMonthNumber = Math.ceil(totalMonths / 4);
+    const lastMonthNumber = Math.floor(monthsUntilPayoff);
     const hearts = [];
     for (let i = 0; i < 4; i++) {
       hearts.push(
         <Heart
           isFilled={
-            lastMonthNumber > monthNumber ||
-            (lastMonthNumber === monthNumber && totalMonths % 4 > i)
+            lastMonthNumber >= monthNumber ||
+            (lastMonthNumber + 1 === monthNumber &&
+              monthsUntilPayoff % 1 > (i + 1) / 4)
               ? true
               : false
           }
@@ -28,3 +29,4 @@ const Month = ({ month, monthNumber, totalMonths }) => {
 };
 
 export default Month;
+0;

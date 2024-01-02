@@ -6,7 +6,7 @@ const Debts = ({ deleteDebt, updateDebt, debts, disposableIncome }) => {
   return (
     <>
       {debts
-        .sort((a, b) => b.balance - a.balance)
+        .sort((a, b) => a.balance - b.balance)
         .map((debt) => (
           <Debt
             key={crypto.randomUUID()}

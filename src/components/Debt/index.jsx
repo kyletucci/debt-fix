@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Debt = ({ debt, deleteDebt, updateDebt }) => {
+const Debt = ({ debt, deleteDebt, updateDebt, disposableIncome }) => {
   const [formValues, setFormValues] = useState({
     balance: debt.balance,
     interestRate: debt.interestRate,
@@ -12,10 +12,17 @@ const Debt = ({ debt, deleteDebt, updateDebt }) => {
   };
 
   const handleKeyPress = (e) => {
+    const payoffMonths = (formValues.balance / disposableIncome).toFixed(2);
     if (e.key === "Enter") {
       e.preventDefault();
       document.activeElement.blur();
-      updateDebt(debt.id, formValues.balance, formValues.interestRate, e);
+      updateDebt(
+        debt.id,
+        formValues.balance,
+        formValues.interestRate,
+        e,
+        payoffMonths
+      );
     }
   };
   return (

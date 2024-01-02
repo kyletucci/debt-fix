@@ -7,6 +7,7 @@ const DebtCalculator = ({ disposableIncome }) => {
   const [debts, setDebts] = useState([]);
   const [title, setTitle] = useState("");
   const [totalDebts, setTotalDebts] = useState(0);
+  const [monthsUntilPayoff, setMonthsUntilPayoff] = useState(0);
 
   const months = [
     "January",
@@ -77,11 +78,19 @@ const DebtCalculator = ({ disposableIncome }) => {
     localStorage.setItem("totalDebt", JSON.stringify(newDebtTotal));
   };
 
+  const setAndSaveMonthsUntilPayoff = (totalDebts, disposableIncome) => {
+    const newMonths = (totalDebts / disposableIncome).toFixed(2);
+    setMonthsUntilPayoff(newMonths);
+    localStorage.setItem("monthsUntilPayoff", JSON.stringify(newMonths));
+  };
+
   // INDIVIDUAL DEBTS
   const deleteDebt = (debtId) => {
     const newDebts = debts.filter((debt) => debt.id !== debtId);
     setAndSaveDebts(newDebts);
   };
+
+  const sortedDebts = debts.sort((a, b) => a.balance - b.balance);
 
   const updateDebt = (
     debtId,
@@ -109,12 +118,19 @@ const DebtCalculator = ({ disposableIncome }) => {
   // MONTH CONTAINER
   const drawMonths = (months) => {
     return months.map((month, i) => (
-      <Month key={crypto.randomUUID()} month={month} monthNumber={i + 1} />
+      <Month
+        key={crypto.randomUUID()}
+        month={month}
+        monthNumber={i + 1}
+        monthsUntilPayoff={monthsUntilPayoff}
+      />
     ));
   };
+
   return (
     <div className="nes-container is-dark with-title debts-container">
       <p className="title">Debt Calculator</p>
+
       <header className="nes-container is-rounded is-dark header">
         <form
           onSubmit={(event) => submitDebt(title, event)}
@@ -161,6 +177,9 @@ const DebtCalculator = ({ disposableIncome }) => {
       <DebtSummary
         disposableIncome={disposableIncome}
         totalDebts={totalDebts}
+        setAndSaveMonthsUntilPayoff={setAndSaveMonthsUntilPayoff}
+        monthsUntilPayoff={monthsUntilPayoff}
+        sortedDebts={sortedDebts}
       />
     </div>
   );

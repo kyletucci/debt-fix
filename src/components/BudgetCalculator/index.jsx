@@ -56,8 +56,10 @@ const BudgetCalculator = ({ setAndSaveDisposableIncome, disposableIncome }) => {
       }
       return category;
     });
+    const newTotalBudget = newCategories.reduce((a, c) => a + +c.budget, 0);
     setCategoriesAndSave(newCategories);
-    setTotalBudgetAndSave(newCategories.reduce((a, c) => a + +c.budget, 0));
+    setTotalBudgetAndSave(newTotalBudget);
+    setAndSaveDisposableIncome(income, newTotalBudget);
   };
 
   const setTotalBudgetAndSave = (newTotalBudget) => {

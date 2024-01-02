@@ -8,10 +8,18 @@ const DebtCalculator = ({ disposableIncome }) => {
   const [title, setTitle] = useState("");
   const [totalDebts, setTotalDebts] = useState(0);
   const [monthsUntilPayoff, setMonthsUntilPayoff] = useState(0);
-  const [payoffMethod, setPayoffMethod] = useState("snowball");
+  const [payoffMethod, setPayoffMethod] = useState("");
 
   const handleMethodChange = (e) => {
     setPayoffMethod(e.target.value);
+    localStorage.setItem("payoffMethod", JSON.stringify(e.target.value));
+  };
+
+  const loadPayoffMethod = () => {
+    const saved = localStorage.getItem("payoffMethod");
+    if (saved) {
+      setPayoffMethod(JSON.parse(saved));
+    }
   };
 
   const sortedDebts =
@@ -37,6 +45,7 @@ const DebtCalculator = ({ disposableIncome }) => {
   useEffect(() => {
     loadSavedDebts();
     loadSavedTotalDebts();
+    loadPayoffMethod();
   }, []);
 
   // DEBT HEADER

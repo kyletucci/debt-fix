@@ -90,8 +90,6 @@ const DebtCalculator = ({ disposableIncome }) => {
     setAndSaveDebts(newDebts);
   };
 
-  const sortedDebts = debts.sort((a, b) => a.balance - b.balance);
-
   const updateDebt = (
     debtId,
     balance,
@@ -168,10 +166,10 @@ const DebtCalculator = ({ disposableIncome }) => {
         </button>
       </div>
       <Debts
-        debts={debts}
         deleteDebt={deleteDebt}
         updateDebt={updateDebt}
         disposableIncome={disposableIncome}
+        debts={debts}
       />
       <div className="months-container">{drawMonths(months)}</div>
       <DebtSummary
@@ -179,7 +177,7 @@ const DebtCalculator = ({ disposableIncome }) => {
         totalDebts={totalDebts}
         setAndSaveMonthsUntilPayoff={setAndSaveMonthsUntilPayoff}
         monthsUntilPayoff={monthsUntilPayoff}
-        sortedDebts={sortedDebts}
+        debts={debts}
       />
     </div>
   );

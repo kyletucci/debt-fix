@@ -15,11 +15,28 @@ html {
   padding: 0;
 }
 
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.app-logo {
+  width: 50%;
+  min-width: 500px;
+  max-width: 1000px;
+  margin: -8em 0;
+  padding: 0;
+}
+
 .nes-container.is-dark.with-title.budget-calculator {
   align-self: flex-start;
   justify-self: flex-start;
-  min-width: 400px;
   width: 50%;
+  min-width: 500px;
 }
 
 .nes-container.is-rounded.summary {
@@ -39,32 +56,6 @@ html {
   width: 100%;
   margin: 0;
   padding: 2em;
-}
-
-.spend-container {
-  font-size: 0.825rem;
-  margin-top: 2em;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.spend-container > span {
-  width: 60%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1em;
-}
-
-.spend-container > span > p {
-  margin: auto 0;
-}
-
-.spend-container > .monthly-income {
-  margin-bottom: 0.5em;
 }
 
 .monthly-income {

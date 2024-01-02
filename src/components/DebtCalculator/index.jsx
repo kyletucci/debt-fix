@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import Debts from "../Debts";
 import Month from "../Month";
+import DebtSummary from "../DebtSummary";
 
-const DebtCalculator = () => {
+const DebtCalculator = ({ disposableIncome }) => {
   const [debts, setDebts] = useState([]);
   const [title, setTitle] = useState("");
+  const [totalDebts, setTotalDebts] = useState(0);
 
   const months = [
     "January",
@@ -23,6 +25,7 @@ const DebtCalculator = () => {
 
   useEffect(() => {
     loadSavedDebts();
+    loadSavedTotalDebts();
   }, []);
 
   // DEBT HEADER
@@ -40,7 +43,6 @@ const DebtCalculator = () => {
           title: debtTitle,
           balance: 0,
           interestRate: 0,
-          totalPayoffMonths: 0,
         },
       ]);
     }
@@ -58,6 +60,21 @@ const DebtCalculator = () => {
     if (saved) {
       setDebts(JSON.parse(saved));
     }
+  };
+
+  const loadSavedTotalDebts = () => {
+    const saved = localStorage.getItem("totalDebts");
+    if (saved) {
+      setTotalDebts(JSON.parse(saved));
+    }
+  };
+
+  const setAndSaveTotalDebts = (newDebts) => {
+    const newDebtTotal = newDebts
+      .map((debt) => debt.balance)
+      .reduce((a, c) => +a + +c);
+    setTotalDebts(newDebtTotal);
+    localStorage.setItem("totalDebt", JSON.stringify(newDebtTotal));
   };
 
   // INDIVIDUAL DEBTS
@@ -86,6 +103,7 @@ const DebtCalculator = () => {
       return debt;
     });
     setAndSaveDebts(newDebts);
+    setAndSaveTotalDebts(newDebts);
   };
 
   // MONTH CONTAINER
@@ -133,8 +151,17 @@ const DebtCalculator = () => {
           DELETE
         </button>
       </div>
-      <Debts debts={debts} deleteDebt={deleteDebt} updateDebt={updateDebt} />
+      <Debts
+        debts={debts}
+        deleteDebt={deleteDebt}
+        updateDebt={updateDebt}
+        disposableIncome={disposableIncome}
+      />
       <div className="months-container">{drawMonths(months)}</div>
+      <DebtSummary
+        disposableIncome={disposableIncome}
+        totalDebts={totalDebts}
+      />
     </div>
   );
 };

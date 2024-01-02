@@ -2,7 +2,7 @@ import Debt from "../Debt/index.jsx";
 
 import "./Debts.css";
 
-const Debts = ({ deleteDebt, updateDebt, debts }) => {
+const Debts = ({ deleteDebt, updateDebt, debts, disposableIncome }) => {
   return (
     <>
       {debts
@@ -13,6 +13,7 @@ const Debts = ({ deleteDebt, updateDebt, debts }) => {
             debt={debt}
             deleteDebt={deleteDebt}
             updateDebt={updateDebt}
+            disposableIncome={disposableIncome}
           />
         ))}
     </>

@@ -29,11 +29,11 @@ const BudgetCalculator = ({ setAndSaveDisposableIncome, disposableIncome }) => {
 
   const setCategoriesAndSave = (newCategories) => {
     setCategories(newCategories);
-    localStorage.setItem("categories", JSON.stringify(newCategories));
+    localStorage.setItem("budgetCategories", JSON.stringify(newCategories));
   };
 
   const loadSavedCategories = () => {
-    const saved = localStorage.getItem("categories");
+    const saved = localStorage.getItem("budgetCategories");
     if (saved) {
       setCategories(JSON.parse(saved));
       setTotalBudget(JSON.parse(saved).reduce((a, c) => a + +c.budget, 0));
@@ -62,11 +62,11 @@ const BudgetCalculator = ({ setAndSaveDisposableIncome, disposableIncome }) => {
 
   const setTotalBudgetAndSave = (newTotalBudget) => {
     setTotalBudget(newTotalBudget);
-    localStorage.setItem("totalBudget", JSON.stringify(newTotalBudget));
+    localStorage.setItem("monthlySpend", JSON.stringify(newTotalBudget));
   };
 
   const loadSavedTotalBudget = () => {
-    const saved = localStorage.getItem("totalBudget");
+    const saved = localStorage.getItem("monthlySpend");
     if (saved) {
       setTotalBudget(JSON.parse(saved));
     }
@@ -75,11 +75,11 @@ const BudgetCalculator = ({ setAndSaveDisposableIncome, disposableIncome }) => {
   const setIncomeAndSave = (newIncome) => {
     newIncome = Number(newIncome);
     setIncome(newIncome);
-    localStorage.setItem("income", JSON.stringify(newIncome));
+    localStorage.setItem("monthlyIncome", JSON.stringify(newIncome));
   };
 
   const loadSavedIncome = () => {
-    const saved = localStorage.getItem("income");
+    const saved = localStorage.getItem("monthlyIncome");
     if (saved) {
       setIncome(JSON.parse(saved));
     }

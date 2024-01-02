@@ -60,3 +60,12 @@
   margin: 0;
   padding: 0.5em 1em;
 }
+
+.heart-icon {
+  margin-right: 0.35em;
+}
+
+.heart-icon.filled {
+  margin-right: 0.35em;
+  color: red;
+}

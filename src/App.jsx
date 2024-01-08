@@ -29,7 +29,6 @@ function App() {
 
   return (
     <div className="main-container">
-      <img className="app-logo" src="src/assets/cover.png" alt="debtfix logo" />
       <div className="app-container">
         <BudgetCalculator
           setAndSaveDisposableIncome={setAndSaveDisposableIncome}

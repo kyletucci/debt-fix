@@ -1,8 +1,7 @@
 import Heart from "../Heart/index.jsx";
 
-const Month = ({ month, monthNumber, monthsUntilPayoff }) => {
+const Month = ({ month, monthNumber, lastMonthNumber, monthsUntilPayoff }) => {
   const drawHearts = () => {
-    const lastMonthNumber = Math.floor(monthsUntilPayoff);
     const hearts = [];
     for (let i = 0; i < 4; i++) {
       hearts.push(

@@ -11,7 +11,7 @@ const DebtSummary = ({
 }) => {
   useEffect(() => {
     setAndSaveMonthsUntilPayoff(totalDebts, disposableIncome);
-  }, [disposableIncome, totalDebts]);
+  }, [totalDebts, disposableIncome]);
 
   return (
     <div className="nes-container is-rounded summary">

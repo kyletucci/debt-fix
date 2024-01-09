@@ -46,6 +46,8 @@ const DebtCalculator = ({ disposableIncome }) => {
     loadSavedDebts();
     loadSavedTotalDebts();
     loadPayoffMethod();
+    loadLastMonthNumber();
+    loadMonthsUntilPayoff();
   }, []);
 
   // DEBT HEADER
@@ -103,6 +105,13 @@ const DebtCalculator = ({ disposableIncome }) => {
     localStorage.setItem("monthsUntilPayoff", JSON.stringify(newMonths));
   };
 
+  const loadMonthsUntilPayoff = () => {
+    const saved = localStorage.getItem("monthsUntilPayoff");
+    if (saved) {
+      setMonthsUntilPayoff(JSON.parse(saved));
+    }
+  };
+
   // INDIVIDUAL DEBTS
   const deleteDebt = (debtId) => {
     const newDebts = debts.filter((debt) => debt.id !== debtId);
@@ -130,15 +139,37 @@ const DebtCalculator = ({ disposableIncome }) => {
     });
     setAndSaveDebts(newDebts);
     setAndSaveTotalDebts(newDebts);
+    setAndSaveLastMonthNumber(
+      Math.floor(
+        newDebts.reduce((a, c) => +a.monthsUntilPayoff + +c.monthsUntilPayoff)
+      )
+    );
   };
 
   // MONTH CONTAINER
+  const [lastMonthNumber, setLastMonthNumber] = useState(
+    Math.floor(monthsUntilPayoff)
+  );
+
+  const setAndSaveLastMonthNumber = (newMonth) => {
+    setLastMonthNumber(newMonth);
+    localStorage.setItem("lastMonthNumber", JSON.stringify(newMonth));
+  };
+
+  const loadLastMonthNumber = () => {
+    const saved = localStorage.getItem("lastMonthNumber");
+    if (saved) {
+      setLastMonthNumber(JSON.parse(saved));
+    }
+  };
+
   const drawMonths = (months) => {
     return months.map((month, i) => (
       <Month
         key={crypto.randomUUID()}
         month={month}
         monthNumber={i + 1}
+        lastMonthNumber={lastMonthNumber}
         monthsUntilPayoff={monthsUntilPayoff}
       />
     ));

@@ -3,13 +3,16 @@ import Header from "../Header";
 import Categories from "../Categories";
 import BudgetSummary from "../BudgetSummary";
 
-const BudgetCalculator = ({ setAndSaveDisposableIncome, disposableIncome }) => {
+const BudgetCalculator = ({
+  income,
+  setAndSaveDisposableIncome,
+  disposableIncome,
+  setIncomeAndSave,
+}) => {
   const [categories, setCategories] = useState([]);
   const [totalBudget, setTotalBudget] = useState(0);
-  const [income, setIncome] = useState(0);
 
   useEffect(() => {
-    loadSavedIncome();
     loadSavedCategories();
     loadSavedTotalBudget();
   }, [totalBudget, disposableIncome, income]);
@@ -71,19 +74,6 @@ const BudgetCalculator = ({ setAndSaveDisposableIncome, disposableIncome }) => {
     const saved = localStorage.getItem("monthlySpend");
     if (saved) {
       setTotalBudget(JSON.parse(saved));
-    }
-  };
-
-  const setIncomeAndSave = (newIncome) => {
-    newIncome = Number(newIncome);
-    setIncome(newIncome);
-    localStorage.setItem("monthlyIncome", JSON.stringify(newIncome));
-  };
-
-  const loadSavedIncome = () => {
-    const saved = localStorage.getItem("monthlyIncome");
-    if (saved) {
-      setIncome(JSON.parse(saved));
     }
   };
 

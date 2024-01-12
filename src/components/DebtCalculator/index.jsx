@@ -4,28 +4,31 @@ import Month from "../Month";
 import DebtSummary from "../DebtSummary";
 
 const DebtCalculator = ({ disposableIncome }) => {
-  const [debts, setDebts] = useState([]);
+  const [debts, setDebts] = useState(() => {
+    const saved = localStorage.getItem("debts");
+    if (saved == null) return [];
+    return JSON.parse(saved);
+  });
+
   const [title, setTitle] = useState("");
-  const [totalDebts, setTotalDebts] = useState(0);
-  const [monthsUntilPayoff, setMonthsUntilPayoff] = useState(0);
-  const [payoffMethod, setPayoffMethod] = useState("");
 
-  const handleMethodChange = (e) => {
-    setPayoffMethod(e.target.value);
-    localStorage.setItem("payoffMethod", JSON.stringify(e.target.value));
-  };
+  const [totalDebts, setTotalDebts] = useState(() => {
+    const saved = localStorage.getItem("totalDebts");
+    if (saved == null) return "";
+    return JSON.parse(saved);
+  });
 
-  const loadPayoffMethod = () => {
+  const [monthsUntilPayoff, setMonthsUntilPayoff] = useState(() => {
+    const saved = localStorage.getItem("monthsUntilPayoff");
+    if (saved == null) return "";
+    return JSON.parse(saved);
+  });
+
+  const [payoffMethod, setPayoffMethod] = useState(() => {
     const saved = localStorage.getItem("payoffMethod");
-    if (saved) {
-      setPayoffMethod(JSON.parse(saved));
-    }
-  };
-
-  const sortedDebts =
-    payoffMethod === "snowball"
-      ? debts.sort((a, b) => a.balance - b.balance)
-      : debts.sort((a, b) => b.interestRate - a.interestRate);
+    if (saved == null) return "";
+    return JSON.parse(saved);
+  });
 
   const months = [
     "January",
@@ -43,12 +46,36 @@ const DebtCalculator = ({ disposableIncome }) => {
   ];
 
   useEffect(() => {
-    loadSavedDebts();
-    loadSavedTotalDebts();
-    loadPayoffMethod();
-    loadLastMonthNumber();
-    loadMonthsUntilPayoff();
-  }, []);
+    localStorage.setItem("debts", JSON.stringify(debts));
+  }, [debts]);
+
+  useEffect(() => {
+    localStorage.setItem("payoffMethod", JSON.stringify(payoffMethod));
+  }, [payoffMethod]);
+
+  useEffect(() => {
+    localStorage.setItem("totalDebts", JSON.stringify(totalDebts));
+  }, [totalDebts]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "monthsUntilPayoff",
+      JSON.stringify(monthsUntilPayoff)
+    );
+  }, [monthsUntilPayoff, disposableIncome]);
+
+  useEffect(() => {
+    drawMonths(months);
+  }, [monthsUntilPayoff]);
+
+  const handleMethodChange = (e) => {
+    setPayoffMethod(e.target.value);
+  };
+
+  const sortedDebts =
+    payoffMethod === "snowball"
+      ? debts.sort((a, b) => a.balance - b.balance)
+      : debts.sort((a, b) => b.interestRate - a.interestRate);
 
   // DEBT HEADER
   const onChangeTitle = (event) => {
@@ -58,7 +85,7 @@ const DebtCalculator = ({ disposableIncome }) => {
   const submitDebt = (debtTitle, event) => {
     event.preventDefault();
     if (debtTitle !== "") {
-      setAndSaveDebts([
+      setDebts([
         ...debts,
         {
           id: crypto.randomUUID(),
@@ -71,51 +98,18 @@ const DebtCalculator = ({ disposableIncome }) => {
     setTitle("");
   };
 
-  // DEBT CONTAINER
-  const setAndSaveDebts = (newDebts) => {
-    setDebts(newDebts);
-    localStorage.setItem("debts", JSON.stringify(newDebts));
-  };
-
-  const loadSavedDebts = () => {
-    const saved = localStorage.getItem("debts");
-    if (saved) {
-      setDebts(JSON.parse(saved));
-    }
-  };
-
-  const loadSavedTotalDebts = () => {
-    const saved = localStorage.getItem("totalDebts");
-    if (saved) {
-      setTotalDebts(JSON.parse(saved));
-    }
-  };
-
+  //TOTAL DEBT
   const setAndSaveTotalDebts = (newDebts) => {
     const newDebtTotal = newDebts
       .map((debt) => debt.balance)
       .reduce((a, c) => +a + +c);
     setTotalDebts(newDebtTotal);
-    localStorage.setItem("totalDebt", JSON.stringify(newDebtTotal));
-  };
-
-  const setAndSaveMonthsUntilPayoff = (totalDebts, disposableIncome) => {
-    const newMonths = (totalDebts / disposableIncome).toFixed(2);
-    setMonthsUntilPayoff(newMonths);
-    localStorage.setItem("monthsUntilPayoff", JSON.stringify(newMonths));
-  };
-
-  const loadMonthsUntilPayoff = () => {
-    const saved = localStorage.getItem("monthsUntilPayoff");
-    if (saved) {
-      setMonthsUntilPayoff(JSON.parse(saved));
-    }
   };
 
   // INDIVIDUAL DEBTS
   const deleteDebt = (debtId) => {
     const newDebts = debts.filter((debt) => debt.id !== debtId);
-    setAndSaveDebts(newDebts);
+    setDebts(newDebts);
   };
 
   const updateDebt = (
@@ -137,30 +131,14 @@ const DebtCalculator = ({ disposableIncome }) => {
       }
       return debt;
     });
-    setAndSaveDebts(newDebts);
+    setDebts(newDebts);
     setAndSaveTotalDebts(newDebts);
-    setAndSaveLastMonthNumber(
-      Math.floor(
-        newDebts.reduce((a, c) => +a.monthsUntilPayoff + +c.monthsUntilPayoff)
-      )
+    setMonthsUntilPayoff(
+      newDebts
+        .reduce((a, c) => +a.monthsUntilPayoff + +c.monthsUntilPayoff)
+        .toFixed(2)
     );
-  };
-
-  // MONTH CONTAINER
-  const [lastMonthNumber, setLastMonthNumber] = useState(
-    Math.floor(monthsUntilPayoff)
-  );
-
-  const setAndSaveLastMonthNumber = (newMonth) => {
-    setLastMonthNumber(newMonth);
-    localStorage.setItem("lastMonthNumber", JSON.stringify(newMonth));
-  };
-
-  const loadLastMonthNumber = () => {
-    const saved = localStorage.getItem("lastMonthNumber");
-    if (saved) {
-      setLastMonthNumber(JSON.parse(saved));
-    }
+    drawMonths(months);
   };
 
   const drawMonths = (months) => {
@@ -169,7 +147,6 @@ const DebtCalculator = ({ disposableIncome }) => {
         key={crypto.randomUUID()}
         month={month}
         monthNumber={i + 1}
-        lastMonthNumber={lastMonthNumber}
         monthsUntilPayoff={monthsUntilPayoff}
       />
     ));
@@ -225,7 +202,6 @@ const DebtCalculator = ({ disposableIncome }) => {
       <DebtSummary
         disposableIncome={disposableIncome}
         totalDebts={totalDebts}
-        setAndSaveMonthsUntilPayoff={setAndSaveMonthsUntilPayoff}
         monthsUntilPayoff={monthsUntilPayoff}
         sortedDebts={sortedDebts}
         handleMethodChange={handleMethodChange}

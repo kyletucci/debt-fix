@@ -6,9 +6,11 @@ import DebtCalculator from "./components/DebtCalculator";
 
 function App() {
   const [disposableIncome, setDisposableIncome] = useState(0);
+  const [income, setIncome] = useState(0);
 
   useEffect(() => {
     loadSavedDisposableIncome();
+    loadSavedIncome();
   }, []);
 
   const setAndSaveDisposableIncome = (income, monthlySpend) => {
@@ -27,14 +29,29 @@ function App() {
     }
   };
 
+  const setIncomeAndSave = (newIncome) => {
+    newIncome = Number(newIncome);
+    setIncome(newIncome);
+    localStorage.setItem("monthlyIncome", JSON.stringify(newIncome));
+  };
+
+  const loadSavedIncome = () => {
+    const saved = localStorage.getItem("monthlyIncome");
+    if (saved) {
+      setIncome(JSON.parse(saved));
+    }
+  };
+
   return (
     <div className="main-container">
       <div className="app-container">
         <BudgetCalculator
           setAndSaveDisposableIncome={setAndSaveDisposableIncome}
           disposableIncome={disposableIncome}
+          income={income}
+          setIncomeAndSave={setIncomeAndSave}
         />
-        <DebtCalculator disposableIncome={disposableIncome} />
+        <DebtCalculator income={income} disposableIncome={disposableIncome} />
       </div>
     </div>
   );

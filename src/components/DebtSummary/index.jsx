@@ -1,18 +1,10 @@
-import { useEffect } from "react";
-
 const DebtSummary = ({
   totalDebts,
-  disposableIncome,
-  setAndSaveMonthsUntilPayoff,
   monthsUntilPayoff,
   handleMethodChange,
   payoffMethod,
   sortedDebts,
 }) => {
-  useEffect(() => {
-    setAndSaveMonthsUntilPayoff(totalDebts, disposableIncome);
-  }, [totalDebts, disposableIncome]);
-
   return (
     <div className="nes-container is-rounded summary">
       <ul className="nes-list is-circle">
@@ -20,7 +12,7 @@ const DebtSummary = ({
           <span>Total Debt: ${totalDebts}</span>
         </li>
         <li>
-          <span>Months Until Payoff: {"" || monthsUntilPayoff} months</span>
+          <span>Months Until Payoff: {monthsUntilPayoff} months</span>
         </li>
       </ul>
       <span>How would you like to pay off your debts?</span>

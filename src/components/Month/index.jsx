@@ -1,6 +1,13 @@
+import { useEffect } from "react";
 import Heart from "../Heart/index.jsx";
 
-const Month = ({ month, monthNumber, lastMonthNumber, monthsUntilPayoff }) => {
+const Month = ({ month, monthNumber, monthsUntilPayoff }) => {
+  useEffect(() => {
+    drawHearts();
+  }, []);
+
+  const lastMonthNumber = Math.floor(monthsUntilPayoff);
+
   const drawHearts = () => {
     const hearts = [];
     for (let i = 0; i < 4; i++) {
@@ -9,7 +16,7 @@ const Month = ({ month, monthNumber, lastMonthNumber, monthsUntilPayoff }) => {
           isFilled={
             lastMonthNumber >= monthNumber ||
             (lastMonthNumber + 1 === monthNumber &&
-              monthsUntilPayoff % 1 > (i + 1) / 4)
+              monthsUntilPayoff % 1 >= (i + 1) / 4)
               ? true
               : false
           }

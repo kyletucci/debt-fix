@@ -91,6 +91,7 @@ const DebtCalculator = ({ disposableIncome }) => {
           id: crypto.randomUUID(),
           title: debtTitle,
           balance: 0,
+          minimum: 0,
           interestRate: 0,
         },
       ]);
@@ -115,6 +116,7 @@ const DebtCalculator = ({ disposableIncome }) => {
   const updateDebt = (
     debtId,
     balance,
+    minimum,
     interestRate,
     event,
     monthsUntilPayoff
@@ -125,6 +127,7 @@ const DebtCalculator = ({ disposableIncome }) => {
         return {
           ...debt,
           balance: balance,
+          minimum: minimum,
           interestRate: interestRate,
           monthsUntilPayoff: monthsUntilPayoff,
         };
@@ -181,6 +184,11 @@ const DebtCalculator = ({ disposableIncome }) => {
         <p className="debt-title">Debt</p>
         <div className="debt-form">
           <span>Balance</span>
+          <div className="minimum">
+            <span>Minimum</span>
+            <span>Monthly</span>
+            <span>Payment</span>
+          </div>
           <span>Interest</span>
         </div>
         <button

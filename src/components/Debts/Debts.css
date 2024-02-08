@@ -43,7 +43,7 @@ button.is-error.invisible {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 40%;
+  width: 100%;
   min-width: fit-content;
   margin: 0 2em;
 }
@@ -62,7 +62,8 @@ button.is-error.invisible {
 }
 
 input.debt-balance,
-input.debt-interest {
+input.debt-interest,
+input.debt-minimum {
   margin-left: 0.5em;
   width: 75px;
   padding: 0;

@@ -7,7 +7,7 @@ const DebtSummary = ({
 }) => {
   return (
     <div className="nes-container is-rounded summary">
-      <ul className="nes-list is-circle">
+      <ul className="nes-list">
         <li>
           <span>Total Debt: ${totalDebts}</span>
         </li>

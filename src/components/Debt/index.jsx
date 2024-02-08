@@ -3,6 +3,7 @@ import { useState } from "react";
 const Debt = ({ debt, deleteDebt, updateDebt, disposableIncome }) => {
   const [formValues, setFormValues] = useState({
     balance: debt.balance,
+    minimum: debt.minimum,
     interestRate: debt.interestRate,
   });
 
@@ -19,6 +20,7 @@ const Debt = ({ debt, deleteDebt, updateDebt, disposableIncome }) => {
       updateDebt(
         debt.id,
         formValues.balance,
+        formValues.minimum,
         formValues.interestRate,
         e,
         payoffMonths
@@ -36,6 +38,16 @@ const Debt = ({ debt, deleteDebt, updateDebt, disposableIncome }) => {
           type="text"
           placeholder="0.00"
           value={formValues.balance}
+          onChange={handleChange}
+          onKeyDown={handleKeyPress}
+          onFocus={(e) => e.target.select()}
+        />
+        <input
+          className="nes-input debt-minimum"
+          name="minimum"
+          type="text"
+          placeholder="0.00"
+          value={formValues.minimum}
           onChange={handleChange}
           onKeyDown={handleKeyPress}
           onFocus={(e) => e.target.select()}

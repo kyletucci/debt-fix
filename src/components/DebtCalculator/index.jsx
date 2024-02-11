@@ -3,13 +3,7 @@ import Debts from "../Debts";
 import Month from "../Month";
 import DebtSummary from "../DebtSummary";
 
-const DebtCalculator = ({ disposableIncome }) => {
-  const [debts, setDebts] = useState(() => {
-    const saved = localStorage.getItem("debts");
-    if (saved == null) return [];
-    return JSON.parse(saved);
-  });
-
+const DebtCalculator = ({ debts, setDebts, disposableIncome }) => {
   const [title, setTitle] = useState("");
 
   const [totalDebts, setTotalDebts] = useState(() => {
@@ -136,12 +130,12 @@ const DebtCalculator = ({ disposableIncome }) => {
     });
     setDebts(newDebts);
     setAndSaveTotalDebts(newDebts);
+    drawMonths(months);
     setMonthsUntilPayoff(
       newDebts
-        .reduce((a, c) => +a.monthsUntilPayoff + +c.monthsUntilPayoff)
-        .toFixed(2)
+        .map((debt) => parseFloat(debt.monthsUntilPayoff))
+        .reduce((a, c) => a + c)
     );
-    drawMonths(months);
   };
 
   const drawMonths = (months) => {
@@ -182,7 +176,7 @@ const DebtCalculator = ({ disposableIncome }) => {
       </header>
       <div className="debts-header">
         <p className="debt-title">Debt</p>
-        <div className="debt-form">
+        <div className="debt-input-title">
           <span>Balance</span>
           <div className="minimum">
             <span>Minimum</span>

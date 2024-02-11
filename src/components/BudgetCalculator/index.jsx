@@ -17,6 +17,14 @@ const BudgetCalculator = ({
     loadSavedTotalBudget();
   }, [totalBudget, disposableIncome, income]);
 
+  const loadSavedCategories = () => {
+    const saved = localStorage.getItem("budgetCategories");
+    if (saved) {
+      setCategories(JSON.parse(saved));
+      setTotalBudget(JSON.parse(saved).reduce((a, c) => a + +c.budget, 0));
+    }
+  };
+
   const addCategory = (categoryTitle) => {
     if (categoryTitle !== "") {
       setCategoriesAndSave([
@@ -27,19 +35,6 @@ const BudgetCalculator = ({
           budget: 0,
         },
       ]);
-    }
-  };
-
-  const setCategoriesAndSave = (newCategories) => {
-    setCategories(newCategories);
-    localStorage.setItem("budgetCategories", JSON.stringify(newCategories));
-  };
-
-  const loadSavedCategories = () => {
-    const saved = localStorage.getItem("budgetCategories");
-    if (saved) {
-      setCategories(JSON.parse(saved));
-      setTotalBudget(JSON.parse(saved).reduce((a, c) => a + +c.budget, 0));
     }
   };
 
@@ -68,6 +63,11 @@ const BudgetCalculator = ({
   const setTotalBudgetAndSave = (newTotalBudget) => {
     setTotalBudget(newTotalBudget);
     localStorage.setItem("monthlySpend", JSON.stringify(newTotalBudget));
+  };
+
+  const setCategoriesAndSave = (newCategories) => {
+    setCategories(newCategories);
+    localStorage.setItem("categories", JSON.stringify(newCategories));
   };
 
   const loadSavedTotalBudget = () => {

@@ -50,7 +50,12 @@ const DebtSummary = ({
         {sortedDebts.map((debt, i) => {
           return (
             <li key={crypto.randomUUID()}>
-              {i === 0 ? "First" : "Next"} you should pay off your {debt.title}.
+              {i === 0
+                ? "First"
+                : i === sortedDebts.length - 1
+                ? "Last"
+                : "Next"}{" "}
+              you should pay off your {debt.title}.
               <br />
               It will take {debt.monthsUntilPayoff} months to pay off.
             </li>

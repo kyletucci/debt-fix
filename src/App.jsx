@@ -42,6 +42,12 @@ function App() {
     }
   };
 
+  const [debts, setDebts] = useState(() => {
+    const saved = localStorage.getItem("debts");
+    if (saved == null) return [];
+    return JSON.parse(saved);
+  });
+
   return (
     <div className="main-container">
       <div className="app-container">
@@ -51,7 +57,12 @@ function App() {
           income={income}
           setIncomeAndSave={setIncomeAndSave}
         />
-        <DebtCalculator income={income} disposableIncome={disposableIncome} />
+        <DebtCalculator
+          debts={debts}
+          setDebts={setDebts}
+          income={income}
+          disposableIncome={disposableIncome}
+        />
       </div>
     </div>
   );

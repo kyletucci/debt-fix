@@ -9,17 +9,22 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 2em;
+  padding: 0 1em 0 2em;
   width: 100%;
 }
 
+.delete-debt {
+  padding: 3px !important;
+}
+
 button.is-error.invisible {
+  width: 15%;
   visibility: hidden;
 }
 
 .debt-container {
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   justify-content: space-between;
   align-items: center;
   border-radius: 10px;
@@ -43,9 +48,9 @@ button.is-error.invisible {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
+  width: 50%;
   min-width: fit-content;
-  margin: 0 2em;
+  margin: 0;
 }
 
 .balance-container,
@@ -58,18 +63,21 @@ button.is-error.invisible {
 .debt-form label {
   padding: 0;
   margin: 0;
-  font-size: 1.5rem;
 }
 
 input.debt-balance,
 input.debt-interest,
 input.debt-minimum {
-  margin-left: 0.5em;
-  width: 75px;
+  margin-left: 5px;
+  max-width: 75px;
   padding: 0;
   background-color: transparent;
   color: white;
-  text-align: center;
+  text-align: left;
+}
+
+input.debt-interest {
+  text-align: right;
 }
 
 .months-container {
@@ -105,4 +113,16 @@ input.debt-minimum {
 
 .debt-summary-instructions + li {
   margin-top: 1em;
+}
+
+.debt-interest {
+  margin-right: 0;
+}
+
+.debt-input-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-left: 9em;
 }

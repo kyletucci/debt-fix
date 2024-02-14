@@ -132,7 +132,7 @@ const DebtCalculator = ({ debts, setDebts, disposableIncome }) => {
     setAndSaveTotalDebts(newDebts);
     drawMonths(months);
     setMonthsUntilPayoff(
-      newDebts
+      debts
         .map((debt) => parseFloat(debt.monthsUntilPayoff))
         .reduce((a, c) => a + c)
     );

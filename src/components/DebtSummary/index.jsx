@@ -12,7 +12,9 @@ const DebtSummary = ({
           <span>Total Debt: ${totalDebts}</span>
         </li>
         <li>
-          <span>Months Until Payoff: {monthsUntilPayoff} months</span>
+          <span>
+            Months Until Payoff: {monthsUntilPayoff.toFixed(2)} months
+          </span>
         </li>
       </ul>
       <span>How would you like to pay off your debts?</span>

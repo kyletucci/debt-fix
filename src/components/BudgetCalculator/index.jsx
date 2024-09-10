@@ -17,8 +17,12 @@ const BudgetCalculator = ({
     loadSavedTotalBudget();
   }, [totalBudget, disposableIncome, income]);
 
+  useEffect(() => {
+    setAndSaveDisposableIncome(income, totalBudget);
+  }, [income, totalBudget]);
+
   const loadSavedCategories = () => {
-    const saved = localStorage.getItem("budgetCategories");
+    const saved = localStorage.getItem("budget_categories");
     if (saved) {
       setCategories(JSON.parse(saved));
       setTotalBudget(JSON.parse(saved).reduce((a, c) => a + +c.budget, 0));
@@ -62,16 +66,16 @@ const BudgetCalculator = ({
 
   const setTotalBudgetAndSave = (newTotalBudget) => {
     setTotalBudget(newTotalBudget);
-    localStorage.setItem("monthlySpend", JSON.stringify(newTotalBudget));
+    localStorage.setItem("monthly_spend", JSON.stringify(newTotalBudget));
   };
 
   const setCategoriesAndSave = (newCategories) => {
     setCategories(newCategories);
-    localStorage.setItem("categories", JSON.stringify(newCategories));
+    localStorage.setItem("budget_categories", JSON.stringify(newCategories));
   };
 
   const loadSavedTotalBudget = () => {
-    const saved = localStorage.getItem("monthlySpend");
+    const saved = localStorage.getItem("monthly_spend");
     if (saved) {
       setTotalBudget(JSON.parse(saved));
     }
@@ -79,6 +83,7 @@ const BudgetCalculator = ({
 
   const handleIncomeChange = (event) => {
     setIncomeAndSave(event.target.value);
+    setAndSaveDisposableIncome(income, totalBudget);
   };
 
   return (

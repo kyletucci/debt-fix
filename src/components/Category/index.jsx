@@ -6,6 +6,7 @@ const Category = ({ category, deleteCategoryById, updateBudget }) => {
 
   const handleBudgetChange = (event) => {
     setBudget(event.target.value);
+    updateBudget(category.id, event.target.value, event);
   };
 
   return (

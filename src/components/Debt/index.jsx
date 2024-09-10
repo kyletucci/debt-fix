@@ -44,7 +44,7 @@ const Debt = ({ debt, deleteDebt, updateDebt, disposableIncome }) => {
             type="text"
             placeholder="0.00"
             value={formValues.balance}
-            onChange={handleChange}
+            onChange={(event) => handleChange(event)}
             onKeyDown={handleKeyPress}
             onFocus={(e) => e.target.select()}
           />

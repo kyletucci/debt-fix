@@ -27,7 +27,7 @@ const BudgetSummary = ({
                 className="nes-input"
                 type="text"
                 value={income}
-                onChange={handleIncomeChange}
+                onChange={() => handleIncomeChange(event)}
                 onClick={(event) => event.target.select()}
               />
             </form>

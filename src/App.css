@@ -24,11 +24,24 @@ html {
   padding: 0;
 }
 
+.page-nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 93vw;
+}
+
 .app-logo {
   width: 50%;
   min-width: 500px;
   max-width: 1000px;
   padding: 0;
+}
+
+.title-font {
+  font-size: 5em;
+  color: white;
 }
 
 .nes-container.is-dark.with-title.budget-calculator {

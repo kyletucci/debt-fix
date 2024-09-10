@@ -2,16 +2,23 @@ import Debt from "../Debt/index.jsx";
 
 import "./Debts.css";
 
-const Debts = ({ deleteDebt, updateDebt, debts, disposableIncome }) => {
+const Debts = ({
+  deleteDebt,
+  updateDebt,
+  debtCategories,
+  disposableIncome,
+  setDebtCategories,
+}) => {
   return (
     <>
-      {debts.map((debt) => (
+      {debtCategories.map((debt) => (
         <Debt
           key={crypto.randomUUID()}
           debt={debt}
           deleteDebt={deleteDebt}
           updateDebt={updateDebt}
           disposableIncome={disposableIncome}
+          setDebtCategories={setDebtCategories}
         />
       ))}
     </>
